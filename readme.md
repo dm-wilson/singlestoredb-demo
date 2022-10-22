@@ -15,9 +15,6 @@ This repo provisions a Grafana instance with two dashboards for users to interac
 | Page Counts - Total Page Views (By Project)    | Hourly    | SingleStore |
 | Media Counts - Total Bytes Served              | Daily     | SingleStore |
 | Media Counts - Total Bytes Served (By Project) | Daily     | SingleStore |
-| Edit Counts                                    | Second    | SingleStore |
-| Edit Counts (By Type)                          | Second    | SingleStore |
-| Edit Bytes                                     | Second    | SingleStore |
 
 Users can login to the Grafana instance at `https://stats.morespinach.xyz`; read-only credentials (U: `reader` , PW: `Bothus[dot]Lunatus`) are required to authenticate on first visit.
 
@@ -31,9 +28,3 @@ This project performs batch and streaming ingestion into SingleStore.
 The full system architecture, including some proposed (but eventually rejected) architectures are shown below:
 
 ![arch-full](./docs/wikipedia-analytics-arch.png)
-
-
-select $__unixEpochGroup(timestamp,'15m', 0) as time, count(1) from rchanges 
-where $__unixEpochFilter(timestamp) 
-group by $__unixEpochGroup(timestamp,'15m', 0)
-order by timestamp;
