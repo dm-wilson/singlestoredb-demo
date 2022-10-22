@@ -1,0 +1,34 @@
+version: '3'
+
+services:
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.2
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: 'wikipedia'
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_USER: 'writer'
+      MYSQL_PASSWORD: 'writer-password'
+    ports:
+      - '3307:3306'
+    expose:
+      - '3306'
+    volumes:
+      - ./../singlestore/schemas:/docker-entrypoint-initdb.d
+
+  rcl:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    restart: unless-stopped
+    depends_on:
+      - mysql
+    links:
+        - mysql:mysql
+    environment:
+        ENV: local
+        MYSQL_HOSTNAME: mysql
+        MYSQL_PASSWORD: 'writer-password'
+    command: /bin/rcl

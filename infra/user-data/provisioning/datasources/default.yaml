@@ -1,0 +1,24 @@
+apiVersion: 1
+datasources:
+  - name: Athena
+    type: grafana-athena-datasource
+    uid: athena
+    jsonData:
+      authType: default
+      defaultRegion: ${ATHENA_DATABASE_REGION}
+      database: ${ATHENA_DATABASE}
+      catalog: AwsDataCatalog
+      workgroup: ${ATHENA_WORKGROUP}
+      outputLocation: s3://aws-glue-temporary-${ACCOUNT_ID}-${ATHENA_DATABASE_REGION}/
+  - name: SingleStoreDB
+    type: mysql
+    uid: singlestoredb
+    url: ${GRAFANA_MYSQL_HOST}:${GRAFANA_MYSQL_PORT}
+    database: wikipedia
+    user: reader
+    jsonData:
+      maxOpenConns: 10
+      maxIdleConns: 5
+      connMaxLifetime: 3600
+    secureJsonData:
+      password: ${GRAFANA_MYSQL_PASSWORD}
