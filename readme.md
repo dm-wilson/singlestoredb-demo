@@ -21,9 +21,10 @@ Users can login to the Grafana instance at `https://stats.morespinach.xyz`; read
 # Architecture
 
 This project performs batch and streaming ingestion into SingleStore.
-- Batch jobs use [Apache Spark](https://spark.apache.org/) running on [AWS Glue](https://aws.amazon.com/glue/features/) to write Wikipedia's [Page Views](https://dumps.wikimedia.org/other/pageviews/readme.html) and [Media Requests](https://dumps.wikimedia.org/other/mediacounts/readme.html) to SingleStore (and archive in S3).
 
-- Streaming jobs use a small golang program (see: `./src/main.go`) to write events from Wikipedia's [Recent Changes](https://stream.wikimedia.org/v2/ui/#/) endpoint to SingleStore.
+- [OK] Batch jobs use [Apache Spark](https://spark.apache.org/) running on [AWS Glue](https://aws.amazon.com/glue/features/) to write Wikipedia's [Page Views](https://dumps.wikimedia.org/other/pageviews/readme.html) and [Media Requests](https://dumps.wikimedia.org/other/mediacounts/readme.html) to SingleStore (and archive in S3).
+
+- [WIP] Streaming jobs use a small golang program (see: `./src/main.go`) to write events from Wikipedia's [Recent Changes](https://stream.wikimedia.org/v2/ui/#/) endpoint to SingleStore.
 
 The full system architecture, including some proposed (but eventually rejected) architectures are shown below:
 

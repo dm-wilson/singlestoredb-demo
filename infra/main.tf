@@ -109,13 +109,8 @@ variable "singlestore_dbpassword" {
   sensitive   = true
 }
 
-
-output "worker_instance_ip" {
-  description = "foo"
-  value       = aws_instance.rchanges.public_ip
-}
-
+// ip address of grafana instance
 output "grafana_instance_ip" {
-  description = "foo"
+  description = "ip address of grafana instance"
   value       = aws_instance.grafana.public_ip
 }
