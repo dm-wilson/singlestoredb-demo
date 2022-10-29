@@ -3,16 +3,6 @@
 -- create db if dne
 CREATE DATABASE IF NOT EXISTS wikipedia; 
 
--- recent changes
-CREATE TABLE wikipedia.rchanges (
-    id VARCHAR(63) PRIMARY KEY, 
-    timestamp bigint,
-    wiki VARCHAR(63),
-    type VARCHAR(15),
-    byte_delta int,
-    INDEX ts_rc_idx (timestamp)
-) ENGINE = InnoDB;
-
 -- pagecounts
 CREATE TABLE wikipedia.pagecounts (
     project_name VARCHAR(63),

@@ -2,10 +2,6 @@
 
 CREATE DATABASE IF NOT EXISTS wikipedia;
 USE wikipedia;
-
--- for the rc-listener
-CREATE USER 'writer'@'%' IDENTIFIED BY 'writer-password';
-GRANT SELECT,INSERT ON wikipedia.* TO 'writer'@'%';
     
 -- for grafana
 CREATE USER 'reader'@'%' IDENTIFIED BY 'reader-password';
