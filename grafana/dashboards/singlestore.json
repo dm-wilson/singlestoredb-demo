@@ -1,0 +1,311 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "",
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
+      "description": "",
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "options": {
+        "content": "# Alternative Architectures - AWS Athena\n\n> Amazon Athena is an interactive query service that makes it easy to analyze data on Amazon S3 using standard SQL. Athena is serverless, so there is no infrastructure to manage, and you pay only for the queries that you run.\n\nThis dashboard is provided as a proof-of-concept for Athena as a (less performant) alternative to SingleStore. In an initial implementation of this application's backend, I considered storing all data as parquet files on S3, queried with [AWS Athena](https://aws.amazon.com/athena/?whats-new-cards.sort-by=item.additionalFields.postDateTime&whats-new-cards.sort-order=desc). Athena can be a powerful too for ad hoc data analysis, but there are some drawbacks:\n\n- Because Athena is serverless, there is a startup/planning period that affects the end-to-end latency of each query. Anecdotally, I've found Athena takes 100-500ms in a queuing state before beginning to process a request and an additional 1000-2000ms in query planning before execution.\n<br></br>\n- Though Athena stores data on an inexpensive medium (S3), we're billed based on the data stored and data scanned per-query. We can optimize our file schema to make common queries faster, but there is no query caching, in-memory buffer-pool, etc. as in a traditional database system.\n\nTry a changing the `projectCode` in the box above from `en.m` to `de` to refresh the \"Total Page Views - Selected Language (Hourly)\" panel. Take note of its performance relative to our SingleStore dashboard.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "9.1.7",
+      "title": "Athena - Introduction",
+      "type": "text"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "athena"
+      },
+      "description": "total page views across all wikimedia sites and domains",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Page Views",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 10
+      },
+      "id": 2,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "utc"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default"
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "P412B726DC9DC6F02"
+          },
+          "format": 1,
+          "rawSQL": "",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Page Views - All Wikimedia Sites (Hourly)",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "grafana-athena-datasource",
+        "uid": "athena"
+      },
+      "description": "total page views across within a selected wikipedia site/language",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "Page Views",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
+      "id": 5,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "timezone": [
+          "utc"
+        ],
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "column": "$project",
+          "connectionArgs": {
+            "catalog": "__default",
+            "database": "__default",
+            "region": "__default"
+          },
+          "datasource": {
+            "type": "grafana-athena-datasource",
+            "uid": "athena"
+          },
+          "format": 1,
+          "rawSQL": "SELECT \n\tfrom_unixtime(interval_start_unixtime) AS hr, \n\tcount(1) AS \"Pages Viewed\",\n\tsum(count) AS \"Total Page Views\"\nfrom wikipedia_analytics.pagecounts \nWHERE $__unixEpochFilter(interval_start_unixtime)\nGROUP BY interval_start_unixtime",
+          "refId": "A"
+        }
+      ],
+      "title": "Total Page Views - Selected Language (Hourly)",
+      "type": "timeseries"
+    }
+  ],
+  "schemaVersion": 37,
+  "style": "dark",
+  "tags": [
+    "Athena",
+    "Demo"
+  ],
+  "templating": {
+    "list": [
+      {
+        "current": {
+          "selected": false,
+          "text": "en.m",
+          "value": "en.m"
+        },
+        "description": "A Wikipedia project code (e.g. `fr`, `en.m`, `de.m`, `ru`) : see: https://meta.wikimedia.org/wiki/Table_of_Wikimedia_projects",
+        "hide": 0,
+        "name": "projectCode",
+        "options": [
+          {
+            "selected": true,
+            "text": "en.m",
+            "value": "en.m"
+          }
+        ],
+        "query": "en.m",
+        "skipUrlSync": false,
+        "type": "textbox"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3d",
+    "to": "now-1d"
+  },
+  "timepicker": {
+    "hidden": true,
+    "nowDelay": "1d",
+    "refresh_intervals": [
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "utc",
+  "title": "Page Views (Athena)",
+  "uid": "oh4dvMS4z",
+  "version": 2,
+  "weekStart": ""
+}
