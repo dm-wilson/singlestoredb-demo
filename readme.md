@@ -4,13 +4,11 @@ This repo contains the source code for my [submission](https://stats.morespinach
 	
 ## Usage
 
-This repo provisions a Grafana instance with two dashboards for users to interact with, each panel comes with a detailed description of what it displays. Some of these queries rely on the properties of an OLAP DB (e.g. `Media Counts - Total Bytes Served`, `Page Counts - Total Page Views`), while others depend on those of a row-based datastore (e.g. `Page Counts - Total Page Views by Article`) . A summary of the provisioned panels is shown below:
+This repo provisions a Grafana instance with a dashboard for users to interact with, each panel comes with a detailed description of what it displays. Some of these queries rely on the properties of an OLAP DB (e.g. `Media Counts - Total Bytes Served`, `Page Counts - Total Page Views`), while others depend on those of a row-based datastore (e.g. `Page Counts - Total Page Views by Article`) . A summary of the provisioned panels is shown below:
 
 **Table 1.0 - Panels Provisioned**
 | Panel                                          | Frequency | Dashboard   |
 |------------------------------------------------|-----------|-------------|
-| Page Counts - Total Page Views                 | Hourly    | Athena Demo |
-| Page Counts - Total Page Views (By Project)    | Hourly    | Athena Demo |
 | Page Counts - Total Page Views                 | Hourly    | SingleStore |
 | Page Counts - Total Page Views (By Project)    | Hourly    | SingleStore |
 | Page Counts - Total Page Views (By Article)    | Hourly    | SingleStore |
